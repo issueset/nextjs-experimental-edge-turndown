@@ -1,13 +1,14 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
+import { NextRequest, NextResponse } from "next/server";
+import TurndownService from "turndown";
 
-type Data = {
-  name: string
+export default function hello(req: NextRequest) {
+  const turndownString = String(TurndownService);
+
+  return NextResponse.json({
+    name: `Hello, from ${req.url} I'm now an Edge Function! Turndown: ${turndownString}`,
+  });
 }
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
-  res.status(200).json({ name: 'John Doe' })
-}
+export const config = {
+  runtime: "experimental-edge",
+};
